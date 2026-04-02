@@ -59,9 +59,13 @@ if st.button("Predict Price"):
         "neighbourhood_group_Staten_Island": staten
     }
 
-    response = requests.post("https://price-predictor-68m2.onrender.com", params=data)
+    response = requests.post("https://price-predictor-68m2.onrender.com", json=data)
 
-    result = response.json()
-
-    st.success(f"💰 Predicted Price: ${result['predicted_price']:.2f}")
-
+    if response.status_code == 200:
+        result = response.json()
+        if "predicted_price" in result:
+            st.success(f"💰 Predicted Price: ${result['predicted_price']:.2f}")
+        else:
+            st.error(f"API returned unexpected JSON: {result}")
+    else:
+        st.error(f"API Error! Status code: {response.status_code}, Response: {response.text}")
