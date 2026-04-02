@@ -59,7 +59,7 @@ if st.button("Predict Price"):
         "neighbourhood_group_Staten_Island": staten
     }
 
-    response = requests.post("http://127.0.0.1:8000/predict", params=data)
+    response = requests.post("https://price-predictor-68m2.onrender.com", params=data)
 
     result = response.json()
 
